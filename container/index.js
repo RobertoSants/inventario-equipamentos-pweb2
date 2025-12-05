@@ -1,45 +1,49 @@
-// [NOVO] container/index.js
-// Esse arquivo funciona como um "Service Locator" simples, conforme o guia.
-// Ele inicializa o banco e os modelos uma única vez.
-
 // [ALTERADO] container/index.js
+// Arquivo de Injeção de Dependências (Service Locator).
+// Aqui eu instancio o banco, os models e agora os services/repositories.
+
 const { createSequelizeInstance } = require('../infra/db/sequelize');
 
-// [CORREÇÃO] Importando os arquivos com letras minúsculas (boas práticas)
+// Importando os Models (com nomes em minúsculo - boas práticas)
 const { defineEquipamentoModel } = require('../infra/db/models/equipamento-model');
 const { defineLocalModel } = require('../infra/db/models/local-model');
 const { defineMovimentacaoModel } = require('../infra/db/models/movimentacao-model');
 
-// 1. Cria a conexão
+// [NOVO] Importando o Repositório e Service de Locais que acabei de criar
+const LocalRepository = require('../infra/repositories/local-repository');
+const LocalService = require('../application/services/local-service');
+
+// 1. Cria a conexão com o banco SQLite
 const sequelize = createSequelizeInstance();
 
-// 2. Define os modelos (cria a estrutura na memória do Sequelize)
+// 2. Define os modelos (cria a estrutura na memória)
 const Equipamento = defineEquipamentoModel(sequelize);
 const Local = defineLocalModel(sequelize);
 const Movimentacao = defineMovimentacaoModel(sequelize);
 
-// 3. Define os relacionamentos (Associações)
-// Um equipamento tem muitas movimentações
+// 3. Define as Associações (Foreign Keys)
 Equipamento.hasMany(Movimentacao, { foreignKey: 'equipamentoId' });
 Movimentacao.belongsTo(Equipamento, { foreignKey: 'equipamentoId' });
 
-// Um local tem muitas movimentações
 Local.hasMany(Movimentacao, { foreignKey: 'localId' });
 Movimentacao.belongsTo(Local, { foreignKey: 'localId' });
 
-// 4. Sincroniza com o banco de dados (Cria as tabelas se não existirem)
+// 4. Sincroniza com o banco (cria tabelas se não existirem)
 sequelize.sync()
-    .then(() => {
-        console.log('[BANCO] Sincronizado com sucesso! Tabelas criadas.');
-    })
-    .catch((error) => {
-        console.error('[ERRO] Falha ao sincronizar banco:', error);
-    });
+    .then(() => console.log('[BANCO] Sincronizado com sucesso!'))
+    .catch((error) => console.error('[ERRO] Falha no banco:', error));
 
-// Exporta tudo para ser usado nos Controllers e Services
+// [NOVO] Instanciando as camadas de Local (Injeção de Dependência)
+// Primeiro crio o repositório passando o Model
+const localRepository = new LocalRepository(Local);
+// Depois crio o service passando o Repositório
+const localService = new LocalService(localRepository);
+
+// Exporta tudo para o resto do sistema usar
 module.exports = {
     sequelize,
     Equipamento,
     Local,
-    Movimentacao
+    Movimentacao,
+    localService // [NOVO] Exportando o serviço para usar no Controller depois
 };
