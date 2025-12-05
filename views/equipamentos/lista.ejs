@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title><%= titulo %></title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn { padding: 10px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background: #0056b3; }
+        /* Cores para os status */
+        .status-ok { color: green; font-weight: bold; }
+        .status-manutencao { color: orange; font-weight: bold; }
+        .status-baixado { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1><%= titulo %></h1>
+    
+    <a href="/equipamentos/novo" class="btn">Cadastrar Novo Equipamento</a>
+    <a href="/" style="margin-left: 10px;">Voltar para Home</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patrimônio</th>
+                <th>Nome</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% equipamentos.forEach(eq => { %>
+                <tr>
+                    <td><%= eq.id %></td>
+                    <td><%= eq.patrimonio %></td>
+                    <td><%= eq.nome %></td>
+                    <td class="status-<%= eq.estado %>"><%= eq.estado.toUpperCase() %></td>
+                </tr>
+            <% }) %>
+
+            <% if (equipamentos.length === 0) { %>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Nenhum equipamento cadastrado.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
