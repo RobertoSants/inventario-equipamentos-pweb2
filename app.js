@@ -1,6 +1,8 @@
 // [NOVO] app.js - Arquivo principal que liga o servidor
 const express = require('express');
 const path = require('path');
+// [ALTERADO] Importando o container para garantir que o banco seja criado ao iniciar
+const container = require('./container');
 
 // Inicializando o app express
 const app = express();
