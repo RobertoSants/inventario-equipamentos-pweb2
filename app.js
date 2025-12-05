@@ -9,7 +9,7 @@ const container = require('./container');
 // [NOVO] Importando as rotas (Locais, Equipamentos, Movimentações)
 const localRoutes = require('./routes/local-routes');
 const equipamentoRoutes = require('./routes/equipamento-routes');
-const movimentacaoRoutes = require('./routes/movimentacao-routes'); // [NOVO]
+const movimentacaoRoutes = require('./routes/movimentacao-routes');
 
 // Inicializando o app express
 const app = express();
@@ -30,26 +30,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// [ROTA TEMPORÁRIA] Só pra testar se o servidor subiu
-// [ALTERADO] Menu completo de navegação
+// [ROTA PRINCIPAL] 
+// [ALTERADO] Agora renderizamos a view 'index.ejs' em vez de mandar HTML cru
+// Isso segue melhor o padrão MVC (View separada da lógica)
 app.get('/', (req, res) => {
-    res.send(`
-        <div style="font-family: sans-serif; padding: 20px;">
-            <h1>Inventário de Equipamentos - IFAL</h1>
-            <p>Sistema online.</p>
-            <ul>
-                <li><a href="/locais">Gerenciar Locais</a></li>
-                <li><a href="/equipamentos">Gerenciar Equipamentos</a></li>
-                <li><a href="/movimentacoes">Movimentações (Histórico)</a></li>
-            </ul>
-        </div>
-    `);
+    res.render('index', { 
+        titulo: 'Inventário de Equipamentos - IFAL' 
+    });
 });
 
 // [NOVO] Registrando as rotas
 app.use('/locais', localRoutes);
 app.use('/equipamentos', equipamentoRoutes);
-app.use('/movimentacoes', movimentacaoRoutes); // [NOVO]
+app.use('/movimentacoes', movimentacaoRoutes);
 
 // Fazendo o servidor rodar
 app.listen(port, () => {

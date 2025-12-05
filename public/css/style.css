@@ -109,7 +109,7 @@ select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+    box-sizing: border-box;
 }
 
 /* --- Mensagens de Erro e Status --- */
@@ -132,3 +132,43 @@ select {
 .status-ok { color: green; font-weight: bold; }
 .status-manutencao { color: orange; font-weight: bold; }
 .status-baixado { color: red; font-weight: bold; }
+
+/* [NOVO] Estilos para o Dashboard (Tela Principal) */
+.dashboard {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap; /* Para quebrar linha se a tela for pequena */
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave */
+    text-align: center;
+    flex: 1; /* Todos os cards tentam ter o mesmo tamanho */
+    min-width: 200px;
+    text-decoration: none !important; /* Remove sublinhado */
+    color: #333;
+    border: 1px solid #eee;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+/* Efeito ao passar o mouse em cima do card */
+.card:hover {
+    transform: translateY(-5px); /* Sobe um pouquinho */
+    box-shadow: 0 8px 12px rgba(0,0,0,0.15); /* Aumenta a sombra */
+    border-color: #007bff; /* Borda azul */
+}
+
+.card h2 {
+    margin: 0 0 10px 0;
+    color: #007bff;
+    font-size: 1.5rem;
+}
+
+.card p {
+    margin: 0;
+    color: #666;
+}
