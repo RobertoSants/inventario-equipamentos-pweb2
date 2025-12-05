@@ -11,7 +11,6 @@ class EquipamentoService {
         const existe = await this.repository.findByPatrimonio(dados.patrimonio);
         
         if (existe) {
-            // Se já existe, lança um erro que o Controller vai pegar e mostrar na tela
             throw new Error('Já existe um equipamento cadastrado com este patrimônio.');
         }
 
@@ -21,6 +20,37 @@ class EquipamentoService {
     // [NOVO] Listar equipamentos
     async listar() {
         return await this.repository.findAll();
+    }
+
+    // [NOVO] Buscar um único equipamento (usado para preencher o formulário de edição)
+    async buscarPorId(id) {
+        const equipamento = await this.repository.findById(id);
+        if (!equipamento) {
+            throw new Error('Equipamento não encontrado.');
+        }
+        return equipamento;
+    }
+
+    // [NOVO] Atualizar equipamento
+    async atualizar(id, dados) {
+        // Verifica se existe antes de tentar atualizar
+        const equipamento = await this.repository.findById(id);
+        if (!equipamento) {
+            throw new Error('Equipamento não encontrado.');
+        }
+
+        
+        return await this.repository.update(id, dados);
+    }
+
+    // [NOVO] Excluir equipamento
+    async excluir(id) {
+        const equipamento = await this.repository.findById(id);
+        if (!equipamento) {
+            throw new Error('Equipamento não encontrado.');
+        }
+        
+        return await this.repository.delete(id);
     }
 }
 

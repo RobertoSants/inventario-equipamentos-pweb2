@@ -17,14 +17,30 @@ class EquipamentoRepository {
     }
 
     // [NOVO] Método específico para buscar por patrimônio
-    // Usaremos isso no Service para verificar duplicidade antes de salvar
     async findByPatrimonio(patrimonio) {
         return await this.model.findOne({ where: { patrimonio: patrimonio } });
     }
 
-    // [NOVO] Busca por ID (Necessário para a validação na hora de movimentar)
+    // [NOVO] Busca por ID (Já tínhamos criado antes, mas mantendo aqui)
     async findById(id) {
         return await this.model.findByPk(id);
+    }
+
+    // [NOVO] Atualiza um equipamento existente
+    async update(id, dados) {
+        // O update do Sequelize retorna um array [numeroDeLinhasAfetadas]
+        await this.model.update(dados, {
+            where: { id: id }
+        });
+        // Retorno o item atualizado para garantir
+        return await this.findById(id);
+    }
+
+    // [NOVO] Remove um equipamento pelo ID
+    async delete(id) {
+        return await this.model.destroy({
+            where: { id: id }
+        });
     }
 }
 
