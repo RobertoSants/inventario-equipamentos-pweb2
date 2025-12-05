@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title><%= titulo %></title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; }
+        .error { color: red; font-size: 0.9em; margin-top: 2px; }
+        .alert-error { background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
+        button { padding: 10px 15px; background: #28a745; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1><%= titulo %></h1>
+
+    <% if (erros.geral) { %>
+        <div class="alert-error">
+            <strong>Erro:</strong> <%= erros.geral.msg %>
+        </div>
+    <% } %>
+
+    <form action="/movimentacoes" method="POST">
+        
+        <div class="form-group">
+            <label for="equipamentoId">Equipamento:</label>
+            <select name="equipamentoId" id="equipamentoId">
+                <option value="">Selecione...</option>
+                <% equipamentos.forEach(eq => { %>
+                    <option value="<%= eq.id %>" <%= dados.equipamentoId == eq.id ? 'selected' : '' %>>
+                        <%= eq.patrimonio %> - <%= eq.nome %> (<%= eq.estado %>)
+                    </option>
+                <% }) %>
+            </select>
+            <% if (erros.equipamentoId) { %>
+                <div class="error"><%= erros.equipamentoId.msg %></div>
+            <% } %>
+        </div>
+
+        <div class="form-group">
+            <label for="localId">Local de Destino:</label>
+            <select name="localId" id="localId">
+                <option value="">Selecione...</option>
+                <% locais.forEach(loc => { %>
+                    <option value="<%= loc.id %>" <%= dados.localId == loc.id ? 'selected' : '' %>>
+                        <%= loc.nome %> - Sala <%= loc.sala %>
+                    </option>
+                <% }) %>
+            </select>
+            <% if (erros.localId) { %>
+                <div class="error"><%= erros.localId.msg %></div>
+            <% } %>
+        </div>
+
+        <div class="form-group">
+            <label for="responsavel">Responsável pela movimentação:</label>
+            <input type="text" id="responsavel" name="responsavel" value="<%= dados.responsavel || '' %>" placeholder="Nome do Professor/Técnico">
+            <% if (erros.responsavel) { %>
+                <div class="error"><%= erros.responsavel.msg %></div>
+            <% } %>
+        </div>
+
+        <button type="submit">Registrar Movimentação</button>
+        <a href="/movimentacoes" style="margin-left: 10px;">Cancelar</a>
+    </form>
+</body>
+</html>

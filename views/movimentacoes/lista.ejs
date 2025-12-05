@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title><%= titulo %></title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn { padding: 10px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1><%= titulo %></h1>
+    
+    <a href="/movimentacoes/novo" class="btn">Registrar Nova Movimentação</a>
+    <a href="/" style="margin-left: 10px;">Voltar para Home</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Equipamento</th>
+                <th>Local de Destino</th>
+                <th>Responsável</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% movimentacoes.forEach(mov => { %>
+                <tr>
+                    <td><%= mov.id %></td>
+                    <td><%= new Date(mov.data).toLocaleString('pt-BR') %></td>
+                    <td>
+                        <%= mov.Equipamento ? mov.Equipamento.nome : 'Excluído' %> 
+                        (<%= mov.Equipamento ? mov.Equipamento.patrimonio : 'N/A' %>)
+                    </td>
+                    <td>
+                        <%= mov.Local ? mov.Local.nome : 'Excluído' %> 
+                        - <%= mov.Local ? mov.Local.sala : '' %>
+                    </td>
+                    <td><%= mov.responsavel %></td>
+                </tr>
+            <% }) %>
+
+            <% if (movimentacoes.length === 0) { %>
+                <tr>
+                    <td colspan="5" style="text-align: center;">Nenhuma movimentação registrada.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

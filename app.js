@@ -6,9 +6,10 @@ const path = require('path');
 // Isso faz o código do container/index.js rodar e criar as tabelas no banco
 const container = require('./container');
 
-// [NOVO] Importando as rotas de Locais e Equipamentos
+// [NOVO] Importando as rotas (Locais, Equipamentos, Movimentações)
 const localRoutes = require('./routes/local-routes');
-const equipamentoRoutes = require('./routes/equipamento-routes'); // [NOVO]
+const equipamentoRoutes = require('./routes/equipamento-routes');
+const movimentacaoRoutes = require('./routes/movimentacao-routes'); // [NOVO]
 
 // Inicializando o app express
 const app = express();
@@ -30,21 +31,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // [ROTA TEMPORÁRIA] Só pra testar se o servidor subiu
-// [ALTERADO] Adicionei links para facilitar a navegação nos testes
+// [ALTERADO] Menu completo de navegação
 app.get('/', (req, res) => {
     res.send(`
-        <h1>Inventário de Equipamentos - IFAL</h1>
-        <p>O servidor está on!</p>
-        <ul>
-            <li><a href="/locais">Gerenciar Locais</a></li>
-            <li><a href="/equipamentos">Gerenciar Equipamentos</a></li>
-        </ul>
+        <div style="font-family: sans-serif; padding: 20px;">
+            <h1>Inventário de Equipamentos - IFAL</h1>
+            <p>Sistema online.</p>
+            <ul>
+                <li><a href="/locais">Gerenciar Locais</a></li>
+                <li><a href="/equipamentos">Gerenciar Equipamentos</a></li>
+                <li><a href="/movimentacoes">Movimentações (Histórico)</a></li>
+            </ul>
+        </div>
     `);
 });
 
 // [NOVO] Registrando as rotas
 app.use('/locais', localRoutes);
-app.use('/equipamentos', equipamentoRoutes); // [NOVO]
+app.use('/equipamentos', equipamentoRoutes);
+app.use('/movimentacoes', movimentacaoRoutes); // [NOVO]
 
 // Fazendo o servidor rodar
 app.listen(port, () => {
