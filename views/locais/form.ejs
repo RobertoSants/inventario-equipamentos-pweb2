@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><%= titulo %></title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 8px; box-sizing: border-box; }
-        .error { color: red; font-size: 0.9em; margin-top: 2px; }
-        button { padding: 10px 15px; background: #28a745; color: white; border: none; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <h1><%= titulo %></h1>
@@ -19,7 +12,7 @@
         
         <div class="form-group">
             <label for="nome">Nome do Local:</label>
-            <input type="text" id="nome" name="nome" value="<%= dados.nome || '' %>" placeholder="Ex: Laboratório 1">
+            <input type="text" id="nome" name="nome" value="<%= dados.nome || '' %>" placeholder="Ex: Laboratório de Informática">
             <% if (erros.nome) { %>
                 <div class="error"><%= erros.nome.msg %></div>
             <% } %>
