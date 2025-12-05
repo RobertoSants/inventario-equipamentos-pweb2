@@ -1,4 +1,3 @@
-// [NOVO] infra/db/sequelize.js
 const { Sequelize } = require('sequelize');
 const path = require('path');
 const fs = require('fs');

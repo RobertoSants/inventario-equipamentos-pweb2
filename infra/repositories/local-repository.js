@@ -1,4 +1,3 @@
-// [NOVO] infra/repositories/local-repository.js
 // Classe responsável por fazer o meio de campo com o banco de dados (Sequelize).
 // Eu isolei isso aqui para seguir o padrão Repository do guia.
 

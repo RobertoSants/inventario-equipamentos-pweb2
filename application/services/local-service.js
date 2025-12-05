@@ -1,4 +1,3 @@
-// [NOVO] application/services/local-service.js
 // Aqui ficam as Regras de Negócio dos Locais.
 // O Controller chama esse arquivo, e esse arquivo chama o Repository.
 

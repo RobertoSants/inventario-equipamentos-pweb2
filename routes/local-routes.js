@@ -1,4 +1,3 @@
-// [NOVO] routes/local-routes.js
 // Define os endereços (URLs) para acessar as funções de Locais
 
 const express = require('express');

@@ -1,4 +1,3 @@
-// [ALTERADO] container/index.js
 // Arquivo de Injeção de Dependências. Liga Models, Repositories e Services.
 
 const { createSequelizeInstance } = require('../infra/db/sequelize');
@@ -8,13 +7,17 @@ const { defineEquipamentoModel } = require('../infra/db/models/equipamento-model
 const { defineLocalModel } = require('../infra/db/models/local-model');
 const { defineMovimentacaoModel } = require('../infra/db/models/movimentacao-model');
 
-// Importando Repositórios e Services de LOCAIS (já existiam)
+// Importando Repositórios e Services de LOCAIS
 const LocalRepository = require('../infra/repositories/local-repository');
 const LocalService = require('../application/services/local-service');
 
-// [NOVO] Importando Repositórios e Services de EQUIPAMENTOS
+// Importando Repositórios e Services de EQUIPAMENTOS
 const EquipamentoRepository = require('../infra/repositories/equipamento-repository');
 const EquipamentoService = require('../application/services/equipamento-service');
+
+// [NOVO] Importando Repositórios e Services de MOVIMENTAÇÃO
+const MovimentacaoRepository = require('../infra/repositories/movimentacao-repository');
+const MovimentacaoService = require('../application/services/movimentacao-service');
 
 // 1. Cria conexão com o banco
 const sequelize = createSequelizeInstance();
@@ -42,9 +45,14 @@ sequelize.sync()
 const localRepository = new LocalRepository(Local);
 const localService = new LocalService(localRepository);
 
-// [NOVO] Equipamentos
+// Equipamentos
 const equipamentoRepository = new EquipamentoRepository(Equipamento);
 const equipamentoService = new EquipamentoService(equipamentoRepository);
+
+// [NOVO] Movimentações
+const movimentacaoRepository = new MovimentacaoRepository(Movimentacao);
+// Aqui passo o repositório de movimentação E O DE EQUIPAMENTO, pois o service precisa validar status
+const movimentacaoService = new MovimentacaoService(movimentacaoRepository, equipamentoRepository);
 
 // Exporta tudo
 module.exports = {
@@ -53,5 +61,6 @@ module.exports = {
     Local,
     Movimentacao,
     localService,
-    equipamentoService // [NOVO] Exportando para usar no Controller
+    equipamentoService,
+    movimentacaoService
 };

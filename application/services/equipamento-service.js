@@ -1,4 +1,3 @@
-// [NOVO] application/services/equipamento-service.js
 // Regras de negócio para Equipamentos.
 
 class EquipamentoService {

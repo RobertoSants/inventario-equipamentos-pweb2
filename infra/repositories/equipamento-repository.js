@@ -1,4 +1,3 @@
-// [NOVO] infra/repositories/equipamento-repository.js
 // Responsável por buscar e salvar equipamentos no banco de dados via Sequelize.
 
 class EquipamentoRepository {
@@ -18,9 +17,14 @@ class EquipamentoRepository {
     }
 
     // [NOVO] Método específico para buscar por patrimônio
-    // Usamos isso no Service para verificar duplicidade antes de salvar
+    // Usaremos isso no Service para verificar duplicidade antes de salvar
     async findByPatrimonio(patrimonio) {
         return await this.model.findOne({ where: { patrimonio: patrimonio } });
+    }
+
+    // [NOVO] Busca por ID (Necessário para a validação na hora de movimentar)
+    async findById(id) {
+        return await this.model.findByPk(id);
     }
 }
 

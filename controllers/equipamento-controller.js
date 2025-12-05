@@ -1,4 +1,3 @@
-// [NOVO] controllers/equipamento-controller.js
 // Responsável por gerenciar as requisições de Equipamentos.
 
 const { validationResult } = require('express-validator');

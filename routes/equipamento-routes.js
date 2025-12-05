@@ -1,4 +1,3 @@
-// [NOVO] routes/equipamento-routes.js
 // Rotas e validações para Equipamentos
 
 const express = require('express');

@@ -1,4 +1,3 @@
-// [NOVO] controllers/local-controller.js
 // Esse arquivo controla o fluxo: Rota -> Controller -> Service -> View
 // Segue o padrão MVC explicado no guia.
 

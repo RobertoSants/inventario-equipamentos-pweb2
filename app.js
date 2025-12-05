@@ -1,4 +1,4 @@
-// [NOVO] app.js - Arquivo principal que liga o servidor
+// Arquivo principal que liga o servidor
 const express = require('express');
 const path = require('path');
 
