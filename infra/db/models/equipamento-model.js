@@ -1,4 +1,5 @@
-// [NOVO] infra/db/models/EquipamentoModel.js
+// [ALTERADO] infra/db/models/equipamento-model.js
+// Ajustei o nome do arquivo para minúsculo seguindo boas práticas
 const { DataTypes } = require('sequelize');
 
 function defineEquipamentoModel(sequelize) {
@@ -30,8 +31,6 @@ function defineEquipamentoModel(sequelize) {
         tableName: 'equipamentos',
         timestamps: true // Cria createdAt e updatedAt automaticamente
     });
-
     return Equipamento;
 }
-
 module.exports = { defineEquipamentoModel };

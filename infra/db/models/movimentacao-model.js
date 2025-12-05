@@ -1,4 +1,4 @@
-// [NOVO] infra/db/models/MovimentacaoModel.js
+// [ALTERADO] infra/db/models/movimentacao-model.js
 const { DataTypes } = require('sequelize');
 
 function defineMovimentacaoModel(sequelize) {
@@ -30,8 +30,6 @@ function defineMovimentacaoModel(sequelize) {
         tableName: 'movimentacoes',
         timestamps: true
     });
-
     return Movimentacao;
 }
-
 module.exports = { defineMovimentacaoModel };

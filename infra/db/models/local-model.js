@@ -1,4 +1,4 @@
-// [NOVO] infra/db/models/LocalModel.js
+// [ALTERADO] infra/db/models/local-model.js
 const { DataTypes } = require('sequelize');
 
 function defineLocalModel(sequelize) {
@@ -24,8 +24,6 @@ function defineLocalModel(sequelize) {
         tableName: 'locais',
         timestamps: true
     });
-
     return Local;
 }
-
 module.exports = { defineLocalModel };

@@ -2,10 +2,13 @@
 // Esse arquivo funciona como um "Service Locator" simples, conforme o guia.
 // Ele inicializa o banco e os modelos uma única vez.
 
+// [ALTERADO] container/index.js
 const { createSequelizeInstance } = require('../infra/db/sequelize');
-const { defineEquipamentoModel } = require('../infra/db/models/EquipamentoModel');
-const { defineLocalModel } = require('../infra/db/models/LocalModel');
-const { defineMovimentacaoModel } = require('../infra/db/models/MovimentacaoModel');
+
+// [CORREÇÃO] Importando os arquivos com letras minúsculas (boas práticas)
+const { defineEquipamentoModel } = require('../infra/db/models/equipamento-model');
+const { defineLocalModel } = require('../infra/db/models/local-model');
+const { defineMovimentacaoModel } = require('../infra/db/models/movimentacao-model');
 
 // 1. Cria a conexão
 const sequelize = createSequelizeInstance();
