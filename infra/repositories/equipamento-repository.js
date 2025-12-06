@@ -1,5 +1,7 @@
 // Responsável por buscar e salvar equipamentos no banco de dados via Sequelize.
 
+const { Op } = require('sequelize'); // [NOVO] Importando operadores do Sequelize (LIKE, OR) para fazer a busca
+
 class EquipamentoRepository {
     // Recebe o Model via Injeção de Dependência
     constructor(model) {
@@ -11,12 +13,32 @@ class EquipamentoRepository {
         return await this.model.create(dados);
     }
 
-    // [NOVO] Busca todos os equipamentos
-    async findAll() {
-        return await this.model.findAll({ order: [['nome', 'ASC']] });
+    // [ALTERADO] Busca todos os equipamentos
+    // Agora aceita um objeto 'filtros' opcional para pesquisar por nome ou status
+    async findAll(filtros = {}) {
+        const where = {};
+
+        // 1. Se tiver termo de busca (pesquisa), procura no Nome OU no Patrimônio
+        if (filtros.termo) {
+            where[Op.or] = [
+                { nome: { [Op.like]: `%${filtros.termo}%` } }, // %termo% significa "contém" em SQL
+                { patrimonio: { [Op.like]: `%${filtros.termo}%` } }
+            ];
+        }
+
+        // 2. Se tiver status selecionado, filtra pelo status exato
+        if (filtros.estado) {
+            where.estado = filtros.estado;
+        }
+
+        return await this.model.findAll({ 
+            where: where, // Aplica os filtros criados acima (se houver)
+            order: [['nome', 'ASC']] 
+        });
     }
 
     // [NOVO] Método específico para buscar por patrimônio
+    // Usaremos isso no Service para verificar duplicidade antes de salvar
     async findByPatrimonio(patrimonio) {
         return await this.model.findOne({ where: { patrimonio: patrimonio } });
     }
