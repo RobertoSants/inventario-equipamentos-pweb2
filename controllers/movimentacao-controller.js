@@ -13,13 +13,26 @@ class MovimentacaoController {
         this.localService = localService;
     }
 
-    // [NOVO] Listar movimentações (Histórico Geral)
+    // [ALTERADO] Listar movimentações (Histórico Geral)
+    // [NOVO] Agora suporta filtros na listagem
     async listar(req, res) {
         try {
-            const movimentacoes = await this.movimentacaoService.listar();
+            // [NOVO] Captura o ID do filtro (se houver) na URL
+            const filtros = {
+                equipamentoId: req.query.equipamentoId || ''
+            };
+
+            // [NOVO] Busco a lista de todos os equipamentos para montar o <select> de filtro na tela
+            const listaEquipamentos = await this.equipamentoService.listar();
+
+            // Busco as movimentações (filtradas ou todas)
+            const movimentacoes = await this.movimentacaoService.listar(filtros);
+            
             res.render('movimentacoes/lista', {
                 titulo: 'Histórico de Movimentações',
-                movimentacoes: movimentacoes
+                movimentacoes: movimentacoes,
+                listaEquipamentos: listaEquipamentos, // [NOVO] Enviando lista para o filtro
+                filtros: filtros // [NOVO] Enviando seleção atual
             });
         } catch (erro) {
             console.log(erro);

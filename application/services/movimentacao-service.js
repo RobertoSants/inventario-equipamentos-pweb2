@@ -1,7 +1,7 @@
 // Regras de negócio para Movimentações.
 
 class MovimentacaoService {
-    // É necessário o repositorio de movimentação (pra salvar) 
+    // Preciso do repositorio de movimentação (pra salvar) 
     // E do repositorio de equipamento (pra validar o status antes)
     constructor(movimentacaoRepository, equipamentoRepository) {
         this.movimentacaoRepository = movimentacaoRepository;
@@ -26,9 +26,10 @@ class MovimentacaoService {
         return await this.movimentacaoRepository.create(dados);
     }
 
-    // [NOVO] Listar todas (para relatórios gerais)
-    async listar() {
-        return await this.movimentacaoRepository.findAll();
+    // [ALTERADO] Listar todas (para relatórios gerais)
+    // [NOVO] Agora aceita filtros para repassar ao repositório
+    async listar(filtros) {
+        return await this.movimentacaoRepository.findAll(filtros);
     }
 
     // [NOVO] Histórico de um equipamento

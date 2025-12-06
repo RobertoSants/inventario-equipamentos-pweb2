@@ -4,10 +4,37 @@
     <meta charset="UTF-8">
     <title><%= titulo %></title>
     <link rel="stylesheet" href="/css/style.css">
-</head>
+    </head>
 <body>
     <h1><%= titulo %></h1>
     
+    <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
+        <form action="/locais" method="GET" style="box-shadow: none; padding: 0; background: none; max-width: 100%;">
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                
+                <div style="flex: 2;">
+                    <label for="termo">Buscar por Nome:</label>
+                    <input type="text" name="termo" value="<%= filtros.termo %>" placeholder="Ex: Laboratório...">
+                </div>
+
+                <div style="flex: 1;">
+                    <label for="bloco">Bloco:</label>
+                    <input type="text" name="bloco" value="<%= filtros.bloco %>" placeholder="Ex: B">
+                </div>
+
+                <div style="flex: 1;">
+                    <label for="sala">Sala:</label>
+                    <input type="text" name="sala" value="<%= filtros.sala %>" placeholder="Ex: 101">
+                </div>
+
+                <div>
+                    <button type="submit" class="btn">Filtrar</button>
+                    <a href="/locais" class="btn" style="background: #6c757d;">Limpar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <a href="/locais/novo" class="btn">Cadastrar Novo Local</a>
     <a href="/" style="margin-left: 10px;">Voltar para Home</a>
 
@@ -38,7 +65,7 @@
 
             <% if (locais.length === 0) { %>
                 <tr>
-                    <td colspan="5" style="text-align: center;">Nenhum local cadastrado.</td>
+                    <td colspan="5" style="text-align: center;">Nenhum local encontrado.</td>
                 </tr>
             <% } %>
         </tbody>

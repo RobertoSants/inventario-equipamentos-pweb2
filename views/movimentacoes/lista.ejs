@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <title><%= titulo %></title>
     <link rel="stylesheet" href="/css/style.css">
-</head>
+    </head>
 <body>
     <h1><%= titulo %></h1>
     
+    <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
+        <form action="/movimentacoes" method="GET" style="box-shadow: none; padding: 0; background: none; max-width: 100%;">
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                <div style="flex: 1;">
+                    <label for="equipamentoId">Filtrar por Equipamento:</label>
+                    <select name="equipamentoId">
+                        <option value="">Todos os Equipamentos</option>
+                        <% listaEquipamentos.forEach(eq => { %>
+                            <option value="<%= eq.id %>" <%= filtros.equipamentoId == eq.id ? 'selected' : '' %>>
+                                <%= eq.patrimonio %> - <%= eq.nome %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="btn">Filtrar</button>
+                    <a href="/movimentacoes" class="btn" style="background: #6c757d;">Limpar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <a href="/movimentacoes/novo" class="btn">Registrar Nova Movimentação</a>
     <a href="/" style="margin-left: 10px;">Voltar para Home</a>
 
@@ -40,7 +62,7 @@
 
             <% if (movimentacoes.length === 0) { %>
                 <tr>
-                    <td colspan="5" style="text-align: center;">Nenhuma movimentação registrada.</td>
+                    <td colspan="5" style="text-align: center;">Nenhuma movimentação encontrada.</td>
                 </tr>
             <% } %>
         </tbody>
