@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title><%= titulo %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1><%= titulo %></h1>
+
+    <form action="/equipamentos/<%= dados.id %>/editar" method="POST">
+        
+        <div class="form-group">
+            <label for="patrimonio">Patrimônio:</label>
+            <input type="text" id="patrimonio" name="patrimonio" value="<%= dados.patrimonio %>">
+            <% if (erros.patrimonio) { %>
+                <div class="error"><%= erros.patrimonio.msg %></div>
+            <% } %>
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Nome do Equipamento:</label>
+            <input type="text" id="nome" name="nome" value="<%= dados.nome %>">
+            <% if (erros.nome) { %>
+                <div class="error"><%= erros.nome.msg %></div>
+            <% } %>
+        </div>
+
+        <div class="form-group">
+            <label for="estado">Estado:</label>
+            <select name="estado" id="estado">
+                <option value="ok" <%= dados.estado === 'ok' ? 'selected' : '' %>>OK</option>
+                <option value="manutenção" <%= dados.estado === 'manutenção' ? 'selected' : '' %>>Manutenção</option>
+                <option value="baixado" <%= dados.estado === 'baixado' ? 'selected' : '' %>>Baixado</option>
+            </select>
+            <% if (erros.estado) { %>
+                <div class="error"><%= erros.estado.msg %></div>
+            <% } %>
+        </div>
+
+        <button type="submit">Salvar Alterações</button>
+        <a href="/equipamentos" style="margin-left: 10px;">Cancelar</a>
+    </form>
+</body>
+</html>

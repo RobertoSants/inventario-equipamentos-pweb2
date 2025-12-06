@@ -18,7 +18,7 @@
                 <th>Nome</th>
                 <th>Bloco</th>
                 <th>Sala</th>
-            </tr>
+                <th>Ações</th> </tr>
         </thead>
         <tbody>
             <% locais.forEach(local => { %>
@@ -27,12 +27,18 @@
                     <td><%= local.nome %></td>
                     <td><%= local.bloco %></td>
                     <td><%= local.sala %></td>
+                    <td>
+                        <a href="/locais/<%= local.id %>/editar">Editar</a> | 
+                        <form action="/locais/<%= local.id %>/excluir" method="POST" style="display:inline; box-shadow:none; padding:0; background:none;" onsubmit="return confirm('Tem certeza?');">
+                            <button type="submit" style="background:none; border:none; color:red; cursor:pointer; padding:0; text-decoration:underline; font-size:1rem;">Excluir</button>
+                        </form>
+                    </td>
                 </tr>
             <% }) %>
 
             <% if (locais.length === 0) { %>
                 <tr>
-                    <td colspan="4" style="text-align: center;">Nenhum local cadastrado.</td>
+                    <td colspan="5" style="text-align: center;">Nenhum local cadastrado.</td>
                 </tr>
             <% } %>
         </tbody>

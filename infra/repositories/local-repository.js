@@ -1,22 +1,31 @@
-// Classe responsável por fazer o meio de campo com o banco de dados (Sequelize).
-// Eu isolei isso aqui para seguir o padrão Repository do guia.
-
+// [ALTERADO] infra/repositories/local-repository.js
 class LocalRepository {
-    // Recebe o Model do Sequelize no construtor (Injeção de Dependência)
     constructor(model) {
         this.model = model;
     }
 
-    // [NOVO] Salva um local no banco
     async create(dados) {
         return await this.model.create(dados);
     }
 
-    // [NOVO] Busca todos os locais ordenados por nome
     async findAll() {
-        return await this.model.findAll({ 
-            order: [['nome', 'ASC']] // Deixa em ordem alfabética pra ficar organizado na lista
-        });
+        return await this.model.findAll({ order: [['nome', 'ASC']] });
+    }
+
+    // [NOVO] Busca por ID
+    async findById(id) {
+        return await this.model.findByPk(id);
+    }
+
+    // [NOVO] Atualiza
+    async update(id, dados) {
+        await this.model.update(dados, { where: { id: id } });
+        return await this.findById(id);
+    }
+
+    // [NOVO] Remove
+    async delete(id) {
+        return await this.model.destroy({ where: { id: id } });
     }
 }
 

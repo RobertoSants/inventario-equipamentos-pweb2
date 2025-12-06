@@ -22,7 +22,7 @@ class EquipamentoController {
         }
     }
 
-    // [NOVO] Abrir formulário vazio
+    // [NOVO] Abrir formulário vazio (Cadastro)
     async formulario(req, res) {
         res.render('equipamentos/form', {
             titulo: 'Novo Equipamento',
@@ -33,7 +33,6 @@ class EquipamentoController {
 
     // [NOVO] Processar o cadastro
     async criar(req, res) {
-        // 1. Validação básica dos campos (vazio, etc)
         const errosValidacao = validationResult(req);
 
         if (!errosValidacao.isEmpty()) {
@@ -45,15 +44,11 @@ class EquipamentoController {
         }
 
         try {
-            // 2. Tenta salvar usando o Service
             await this.service.criar(req.body);
             res.redirect('/equipamentos');
 
         } catch (erro) {
-            // [REGRA DE NEGÓCIO] Aqui capturamos o erro de patrimônio duplicado lançado pelo Service
             console.log('Erro de negócio:', erro.message);
-            
-            // Recriamos o objeto de erro para mostrar no campo 'patrimonio' na tela
             const errosNegocio = {
                 patrimonio: { msg: erro.message }
             };
@@ -63,6 +58,72 @@ class EquipamentoController {
                 erros: errosNegocio,
                 dados: req.body
             });
+        }
+    }
+
+    // [NOVO] Exibe o formulário de edição preenchido com os dados atuais
+    async editarForm(req, res) {
+        try {
+            const id = req.params.id;
+            const equipamento = await this.service.buscarPorId(id);
+
+            res.render('equipamentos/editar', {
+                titulo: 'Editar Equipamento',
+                erros: {},
+                dados: equipamento // Mando os dados do banco para preencher os campos
+            });
+        } catch (erro) {
+            console.log(erro);
+            res.send('Erro ao buscar equipamento para edição.');
+        }
+    }
+
+    // [NOVO] Processa a atualização dos dados
+    async atualizar(req, res) {
+        const id = req.params.id;
+        const errosValidacao = validationResult(req);
+
+        // Se tiver erro de validação, volto pro form de edição
+        if (!errosValidacao.isEmpty()) {
+            return res.render('equipamentos/editar', {
+                titulo: 'Editar Equipamento',
+                erros: errosValidacao.mapped(),
+                dados: { id: id, ...req.body } // Mantenho os dados digitados e o ID
+            });
+        }
+
+        try {
+            await this.service.atualizar(id, req.body);
+            res.redirect('/equipamentos');
+        } catch (erro) {
+            console.log(erro);
+            res.send('Erro ao atualizar equipamento.');
+        }
+    }
+
+    // [ALTERADO] Processa a exclusão com tratamento de erro
+    // Alterei aqui para capturar o erro de "manutenção" e mostrar na tela
+    async excluir(req, res) {
+        try {
+            const id = req.params.id;
+            await this.service.excluir(id);
+            res.redirect('/equipamentos');
+        } catch (erro) {
+            console.log(erro);
+            
+            // Se der erro (ex: está em manutenção), eu preciso listar novamente
+            // para mostrar a mensagem na própria tela de listagem.
+            try {
+                const equipamentos = await this.service.listar();
+                res.render('equipamentos/lista', {
+                    titulo: 'Gerenciar Equipamentos',
+                    equipamentos: equipamentos,
+                    erro: erro.message // [NOVO] Mando o erro para a view exibir o alerta vermelho
+                });
+            } catch (erroListagem) {
+                // Caso extremo onde até listar falha
+                res.send('Erro fatal ao tentar excluir e listar: ' + erro.message);
+            }
         }
     }
 }

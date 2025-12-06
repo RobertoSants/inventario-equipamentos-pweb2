@@ -8,6 +8,12 @@
 <body>
     <h1><%= titulo %></h1>
     
+    <% if (typeof erro !== 'undefined' && erro) { %>
+        <div class="alert-error">
+            <%= erro %>
+        </div>
+    <% } %>
+
     <a href="/equipamentos/novo" class="btn">Cadastrar Novo Equipamento</a>
     <a href="/" style="margin-left: 10px;">Voltar para Home</a>
 
@@ -18,6 +24,7 @@
                 <th>Patrimônio</th>
                 <th>Nome</th>
                 <th>Estado</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -27,12 +34,18 @@
                     <td><%= eq.patrimonio %></td>
                     <td><%= eq.nome %></td>
                     <td class="status-<%= eq.estado %>"><%= eq.estado.toUpperCase() %></td>
+                    <td>
+                        <a href="/equipamentos/<%= eq.id %>/editar">Editar</a> | 
+                        <form action="/equipamentos/<%= eq.id %>/excluir" method="POST" style="display:inline; box-shadow:none; padding:0; background:none;" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                            <button type="submit" style="background:none; border:none; color:red; cursor:pointer; padding:0; text-decoration:underline; font-size:1rem;">Excluir</button>
+                        </form>
+                    </td>
                 </tr>
             <% }) %>
 
             <% if (equipamentos.length === 0) { %>
                 <tr>
-                    <td colspan="4" style="text-align: center;">Nenhum equipamento cadastrado.</td>
+                    <td colspan="5" style="text-align: center;">Nenhum equipamento cadastrado.</td>
                 </tr>
             <% } %>
         </tbody>
