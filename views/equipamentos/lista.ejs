@@ -14,6 +14,33 @@
         </div>
     <% } %>
 
+    <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
+        <form action="/equipamentos" method="GET" style="box-shadow: none; padding: 0; background: none; max-width: 100%;">
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                
+                <div style="flex: 2;">
+                    <label for="termo">Buscar (Nome ou Patrimônio):</label>
+                    <input type="text" name="termo" value="<%= filtros.termo %>" placeholder="Digite para pesquisar...">
+                </div>
+
+                <div style="flex: 1;">
+                    <label for="estado">Status:</label>
+                    <select name="estado">
+                        <option value="">Todos</option>
+                        <option value="ok" <%= filtros.estado === 'ok' ? 'selected' : '' %>>OK</option>
+                        <option value="manutenção" <%= filtros.estado === 'manutenção' ? 'selected' : '' %>>Manutenção</option>
+                        <option value="baixado" <%= filtros.estado === 'baixado' ? 'selected' : '' %>>Baixado</option>
+                    </select>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn">Filtrar</button>
+                    <a href="/equipamentos" class="btn" style="background: #6c757d;">Limpar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <a href="/equipamentos/novo" class="btn">Cadastrar Novo Equipamento</a>
     <a href="/" style="margin-left: 10px;">Voltar para Home</a>
 
@@ -45,7 +72,7 @@
 
             <% if (equipamentos.length === 0) { %>
                 <tr>
-                    <td colspan="5" style="text-align: center;">Nenhum equipamento cadastrado.</td>
+                    <td colspan="5" style="text-align: center;">Nenhum equipamento encontrado.</td>
                 </tr>
             <% } %>
         </tbody>

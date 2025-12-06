@@ -8,13 +8,23 @@ class EquipamentoController {
         this.service = service;
     }
 
-    // [NOVO] Listar equipamentos
+    // [ALTERADO] Listar equipamentos (Agora com suporte a filtros)
     async listar(req, res) {
         try {
-            const equipamentos = await this.service.listar();
+            // [NOVO] Captura os filtros da URL (req.query)
+            // Exemplo: se a URL for /equipamentos?termo=teste&estado=ok
+            const filtros = {
+                termo: req.query.termo || '', // Se não tiver nada, fica vazio
+                estado: req.query.estado || ''
+            };
+
+            // [ALTERADO] Passo os filtros para o service buscar no banco
+            const equipamentos = await this.service.listar(filtros);
+            
             res.render('equipamentos/lista', {
                 titulo: 'Gerenciar Equipamentos',
-                equipamentos: equipamentos
+                equipamentos: equipamentos,
+                filtros: filtros // [NOVO] Mando os filtros de volta para a view (para manter o input preenchido)
             });
         } catch (erro) {
             console.log(erro);
@@ -114,10 +124,12 @@ class EquipamentoController {
             // Se der erro (ex: está em manutenção), eu preciso listar novamente
             // para mostrar a mensagem na própria tela de listagem.
             try {
-                const equipamentos = await this.service.listar();
+                // [NOVO] Preciso passar os filtros vazios aqui pra não quebrar a view que espera 'filtros'
+                const equipamentos = await this.service.listar({});
                 res.render('equipamentos/lista', {
                     titulo: 'Gerenciar Equipamentos',
                     equipamentos: equipamentos,
+                    filtros: { termo: '', estado: '' }, // [NOVO] Filtros padrão
                     erro: erro.message // [NOVO] Mando o erro para a view exibir o alerta vermelho
                 });
             } catch (erroListagem) {
