@@ -1,5 +1,4 @@
 // Responsável por gerenciar as requisições de Equipamentos.
-
 const { validationResult } = require('express-validator');
 
 class EquipamentoController {
@@ -8,7 +7,7 @@ class EquipamentoController {
         this.service = service;
     }
 
-    // [ALTERADO] Listar equipamentos (Agora com suporte a filtros)
+    // Listar equipamentos (Agora com suporte a filtros)
     async listar(req, res) {
         try {
             // [NOVO] Captura os filtros da URL (req.query)
@@ -18,13 +17,13 @@ class EquipamentoController {
                 estado: req.query.estado || ''
             };
 
-            // [ALTERADO] Passo os filtros para o service buscar no banco
+            // Passa os filtros para o service buscar no banco
             const equipamentos = await this.service.listar(filtros);
             
             res.render('equipamentos/lista', {
                 titulo: 'Gerenciar Equipamentos',
                 equipamentos: equipamentos,
-                filtros: filtros // [NOVO] Mando os filtros de volta para a view (para manter o input preenchido)
+                filtros: filtros // [NOVO] Manda os filtros de volta para a view (para manter o input preenchido)
             });
         } catch (erro) {
             console.log(erro);
@@ -93,12 +92,12 @@ class EquipamentoController {
         const id = req.params.id;
         const errosValidacao = validationResult(req);
 
-        // Se tiver erro de validação, volto pro form de edição
+        // Se tiver erro de validação, volta para o form de edição
         if (!errosValidacao.isEmpty()) {
             return res.render('equipamentos/editar', {
                 titulo: 'Editar Equipamento',
                 erros: errosValidacao.mapped(),
-                dados: { id: id, ...req.body } // Mantenho os dados digitados e o ID
+                dados: { id: id, ...req.body } // Mantém os dados digitados e o ID
             });
         }
 
@@ -121,16 +120,16 @@ class EquipamentoController {
         } catch (erro) {
             console.log(erro);
             
-            // Se der erro (ex: está em manutenção), eu preciso listar novamente
+            // Se der erro (ex: está em manutenção), é preciso listar novamente
             // para mostrar a mensagem na própria tela de listagem.
             try {
-                // [NOVO] Preciso passar os filtros vazios aqui pra não quebrar a view que espera 'filtros'
+                // [NOVO] Precisa passar os filtros vazios aqui pra não quebrar a view que espera 'filtros'
                 const equipamentos = await this.service.listar({});
                 res.render('equipamentos/lista', {
                     titulo: 'Gerenciar Equipamentos',
                     equipamentos: equipamentos,
                     filtros: { termo: '', estado: '' }, // [NOVO] Filtros padrão
-                    erro: erro.message // [NOVO] Mando o erro para a view exibir o alerta vermelho
+                    erro: erro.message // [NOVO] Manda o erro para a view exibir o alerta vermelho
                 });
             } catch (erroListagem) {
                 // Caso extremo onde até listar falha

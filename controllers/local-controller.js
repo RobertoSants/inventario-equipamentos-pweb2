@@ -1,5 +1,4 @@
 // Esse arquivo recebe as requisições do usuário (cliques, formulários) e decide o que fazer.
-
 const { validationResult } = require('express-validator');
 
 class LocalController {
@@ -8,7 +7,7 @@ class LocalController {
         this.service = service;
     }
 
-    // [ALTERADO] Método para exibir a lista de locais (GET /locais)
+    // Método para exibir a lista de locais (GET /locais)
     // [NOVO] Agora trata os filtros específicos de bloco e sala
     async listar(req, res) {
         try {
@@ -16,7 +15,7 @@ class LocalController {
             const filtros = {
                 termo: req.query.termo || '', // Busca geral (Nome)
                 bloco: req.query.bloco || '', // Busca específica de Bloco
-                sala: req.query.sala || ''    // [NOVO] Busca específica de Sala
+                sala: req.query.sala || ''    // Busca específica de Sala
             };
 
             // Chama o service para buscar os dados no banco (passando os filtros)

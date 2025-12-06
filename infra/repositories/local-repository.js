@@ -1,7 +1,7 @@
 // Esse arquivo é responsável por fazer as chamadas diretas ao Banco de Dados usando o Sequelize.
-// Ele isola o banco do resto da aplicação (Padrão Repository).
+// Ele isola o banco do resto da aplicação.
 
-const { Op } = require('sequelize'); // [NOVO] Importando operadores do Sequelize (LIKE, OR) para busca
+const { Op } = require('sequelize'); // Importando operadores do Sequelize (LIKE, OR) para busca
 
 class LocalRepository {
     // Recebe o Model do Sequelize no construtor (Injeção de Dependência)
@@ -14,7 +14,7 @@ class LocalRepository {
         return await this.model.create(dados);
     }
 
-    // [ALTERADO] Método para buscar todos os locais
+    // Método para buscar todos os locais
     // [NOVO] Agora aceita filtros combinados (termo, bloco E sala)
     async findAll(filtros = {}) {
         const where = {};
@@ -39,7 +39,7 @@ class LocalRepository {
             where.sala = { [Op.like]: `%${filtros.sala}%` };
         }
 
-        // Ordena pelo nome para ficar bonito na lista
+        // Ordena pelo nome para ficar padronizado na lista
         return await this.model.findAll({ 
             where: where, // [NOVO] Aplica os filtros (Eles funcionam como AND: termo E bloco E sala)
             order: [['nome', 'ASC']] 

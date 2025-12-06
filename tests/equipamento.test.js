@@ -2,7 +2,7 @@
 // Usa Supertest para simular requisições HTTP e Jest para verificar os resultados.
 
 const request = require('supertest');
-const app = require('../app'); // Importa nosso servidor
+const app = require('../app'); // Importa o servidor
 const { sequelize } = require('../container'); // Importa o banco para poder limpar/fechar
 
 describe('Testes de Equipamentos (E2E)', () => {
@@ -28,7 +28,7 @@ describe('Testes de Equipamentos (E2E)', () => {
                 estado: 'ok'
             });
 
-        // O sucesso no nosso controller é um redirecionamento (Status 302) para a lista
+        // O sucesso do controller é um redirecionamento (Status 302) para a lista
         expect(res.statusCode).toEqual(302);
         expect(res.headers.location).toBe('/equipamentos');
     });
@@ -45,11 +45,11 @@ describe('Testes de Equipamentos (E2E)', () => {
                 estado: 'ok'
             });
 
-        // Nesse caso, nosso controller não redireciona (302).
+        // Nesse caso, o controller não redireciona (302).
         // Ele renderiza a página de novo (200) mostrando o erro.
         expect(res.statusCode).toEqual(200);
         
-        // Verifico se o HTML retornado contém a mensagem de erro que definimos no Service
+        // Verifica se o HTML retornado contém a mensagem de erro que foi definida no Service
         expect(res.text).toContain('Já existe um equipamento cadastrado com este patrimônio');
     });
 

@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const path = require('path');
 const fs = require('fs');
 
-// Função para criar a instância do banco (Factory Pattern)
+// Função para criar a instância do banco
 function createSequelizeInstance() {
     // [NOVO] Verificação de ambiente
     // Se estivermos rodando testes (NODE_ENV = 'test'), usamos banco em memória.
@@ -18,7 +18,7 @@ function createSequelizeInstance() {
     // [CONFIGURAÇÃO] Define onde vai ficar o arquivo do banco real
     const dataDir = path.join(process.cwd(), 'data');
     
-    // Se a pasta 'data' não existir, eu crio ela aqui pra não dar erro
+    // Se a pasta 'data' não existir, ela é criada aqui para não dar erro
     if (!fs.existsSync(dataDir)) {
         fs.mkdirSync(dataDir);
     }

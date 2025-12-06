@@ -1,5 +1,5 @@
 // Essa classe controla as Regras de Negócio dos Locais.
-// Ela não sabe que banco de dados estamos usando, ela só chama o repositório.
+// Ela não sabe qual banco de dados está sendo utilizando, ela apenas chama o repositório.
 
 class LocalService {
     // Recebe o repositório no construtor
@@ -10,7 +10,7 @@ class LocalService {
     // Regra para criar um local
     async criar(dados) {
         // [REGRA DE NEGÓCIO] Aqui poderíamos validar se o bloco existe, etc.
-        // Por enquanto, apenas repassamos para o repositório salvar.
+        // Porém, vamos apenas repassar para o repositório salvar.
         return await this.repository.create(dados);
     }
 

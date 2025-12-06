@@ -1,5 +1,3 @@
-// [ALTERADO] infra/db/models/equipamento-model.js
-// Ajustei o nome do arquivo para minúsculo seguindo boas práticas
 const { DataTypes } = require('sequelize');
 
 function defineEquipamentoModel(sequelize) {

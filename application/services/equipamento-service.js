@@ -11,7 +11,7 @@ class EquipamentoService {
         const existe = await this.repository.findByPatrimonio(dados.patrimonio);
         
         if (existe) {
-            // Se já existe, lanço um erro que o Controller vai pegar e mostrar na tela
+            // Se já existe, gera um erro que o Controller vai pegar e mostrar na tela
             throw new Error('Já existe um equipamento cadastrado com este patrimônio.');
         }
 
@@ -40,9 +40,6 @@ class EquipamentoService {
         if (!equipamento) {
             throw new Error('Equipamento não encontrado.');
         }
-
-        // Aqui poderíamos validar se o novo patrimônio já existe em OUTRO equipamento,
-        // mas vamos deixar o banco cuidar disso por enquanto para simplificar.
         
         return await this.repository.update(id, dados);
     }

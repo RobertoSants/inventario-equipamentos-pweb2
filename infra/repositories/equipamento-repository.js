@@ -1,6 +1,6 @@
 // Responsável por buscar e salvar equipamentos no banco de dados via Sequelize.
 
-const { Op } = require('sequelize'); // [NOVO] Importando operadores do Sequelize (LIKE, OR) para fazer a busca
+const { Op } = require('sequelize'); // Importando operadores do Sequelize (LIKE, OR) para fazer a busca
 
 class EquipamentoRepository {
     // Recebe o Model via Injeção de Dependência
@@ -8,7 +8,7 @@ class EquipamentoRepository {
         this.model = model;
     }
 
-    // [NOVO] Salva um novo equipamento
+    // Salva um novo equipamento
     async create(dados) {
         return await this.model.create(dados);
     }
@@ -38,12 +38,12 @@ class EquipamentoRepository {
     }
 
     // [NOVO] Método específico para buscar por patrimônio
-    // Usaremos isso no Service para verificar duplicidade antes de salvar
+    // Usado no Service para verificar duplicidade antes de salvar
     async findByPatrimonio(patrimonio) {
         return await this.model.findOne({ where: { patrimonio: patrimonio } });
     }
 
-    // [NOVO] Busca por ID (Já tínhamos criado antes, mas mantendo aqui)
+    // [NOVO] Busca por ID
     async findById(id) {
         return await this.model.findByPk(id);
     }

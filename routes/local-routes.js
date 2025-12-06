@@ -18,7 +18,7 @@ router.get('/', controller.listar.bind(controller));
 router.get('/novo', controller.formulario.bind(controller));
 router.post('/', validacoes, controller.criar.bind(controller));
 
-// [NOVO] Rotas de Editar e Excluir
+// Rotas de Editar e Excluir
 router.get('/:id/editar', controller.editarForm.bind(controller));
 router.post('/:id/editar', validacoes, controller.atualizar.bind(controller));
 router.post('/:id/excluir', controller.excluir.bind(controller));

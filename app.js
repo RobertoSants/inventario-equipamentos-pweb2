@@ -2,10 +2,10 @@
 const express = require('express');
 const path = require('path');
 
-// [NOVO] Importando o container para garantir que o banco e os models sejam carregados
+// Importando o container para garantir que o banco e os models sejam carregados
 const container = require('./container');
 
-// [NOVO] Importando as rotas (Locais, Equipamentos, Movimentações)
+// Importando as rotas (Locais, Equipamentos, Movimentações)
 const localRoutes = require('./routes/local-routes');
 const equipamentoRoutes = require('./routes/equipamento-routes');
 const movimentacaoRoutes = require('./routes/movimentacao-routes');

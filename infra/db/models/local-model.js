@@ -1,4 +1,3 @@
-// [ALTERADO] infra/db/models/local-model.js
 const { DataTypes } = require('sequelize');
 
 function defineLocalModel(sequelize) {

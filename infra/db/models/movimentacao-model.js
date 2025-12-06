@@ -1,4 +1,3 @@
-// [ALTERADO] infra/db/models/movimentacao-model.js
 const { DataTypes } = require('sequelize');
 
 function defineMovimentacaoModel(sequelize) {

@@ -1,14 +1,14 @@
 // Regras de negócio para Movimentações.
 
 class MovimentacaoService {
-    // Preciso do repositorio de movimentação (pra salvar) 
+    // Precisa do repositorio de movimentação (pra salvar) 
     // E do repositorio de equipamento (pra validar o status antes)
     constructor(movimentacaoRepository, equipamentoRepository) {
         this.movimentacaoRepository = movimentacaoRepository;
         this.equipamentoRepository = equipamentoRepository;
     }
 
-    // [NOVO] Regra para movimentar
+    // Regra para movimentar
     async criar(dados) {
         // 1. Busco o equipamento pelo ID que veio do formulário
         const equipamento = await this.equipamentoRepository.findById(dados.equipamentoId);

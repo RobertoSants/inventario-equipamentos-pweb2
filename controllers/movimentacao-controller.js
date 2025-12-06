@@ -13,7 +13,7 @@ class MovimentacaoController {
         this.localService = localService;
     }
 
-    // [ALTERADO] Listar movimentações (Histórico Geral)
+    // Listar movimentações (Histórico Geral)
     // [NOVO] Agora suporta filtros na listagem
     async listar(req, res) {
         try {
@@ -65,7 +65,7 @@ class MovimentacaoController {
     async criar(req, res) {
         const erros = validationResult(req);
 
-        // Se tiver erro de validação (campos vazios), preciso recarregar as listas
+        // Se tiver erro de validação (campos vazios), é preciso recarregar as listas
         // senão os <select> somem da tela e dá erro.
         if (!erros.isEmpty()) {
             const equipamentos = await this.equipamentoService.listar();
@@ -86,14 +86,14 @@ class MovimentacaoController {
 
         } catch (erro) {
             // [TRATAMENTO DE ERRO DE NEGÓCIO]
-            // Aqui pegamos o erro "Equipamento BAIXADO" que criamos no Service
+            // Pega o erro "Equipamento BAIXADO" que foi criado no Service
             console.log('Erro de negócio:', erro.message);
 
-            // Recarrego as listas para voltar pro formulário
+            // Recarrega as listas para voltar pro formulário
             const equipamentos = await this.equipamentoService.listar();
             const locais = await this.localService.listar();
 
-            // Crio um objeto de erro para mostrar uma mensagem geral
+            // Cria um objeto de erro para mostrar uma mensagem geral
             const erroNegocio = {
                 geral: { msg: erro.message }
             };

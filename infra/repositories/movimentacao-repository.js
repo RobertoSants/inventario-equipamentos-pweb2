@@ -5,12 +5,12 @@ class MovimentacaoRepository {
         this.model = model;
     }
 
-    // [NOVO] Registra uma nova movimentação
+    // Registra uma nova movimentação
     async create(dados) {
         return await this.model.create(dados);
     }
 
-    // [ALTERADO] Busca todas as movimentações
+    // Busca todas as movimentações
     // O 'include' é como um JOIN no SQL, para não mostrar só IDs (ex: id: 1), mas sim o nome (ex: Computador)
     // [NOVO] Agora aceita filtros opcionais (ex: por equipamento)
     async findAll(filtros = {}) {

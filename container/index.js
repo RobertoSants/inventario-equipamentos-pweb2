@@ -1,5 +1,4 @@
 // Arquivo de Injeção de Dependências. Liga Models, Repositories e Services.
-
 const { createSequelizeInstance } = require('../infra/db/sequelize');
 
 // Importando os Models
@@ -15,7 +14,7 @@ const LocalService = require('../application/services/local-service');
 const EquipamentoRepository = require('../infra/repositories/equipamento-repository');
 const EquipamentoService = require('../application/services/equipamento-service');
 
-// [NOVO] Importando Repositórios e Services de MOVIMENTAÇÃO
+// Importando Repositórios e Services de MOVIMENTAÇÃO
 const MovimentacaoRepository = require('../infra/repositories/movimentacao-repository');
 const MovimentacaoService = require('../application/services/movimentacao-service');
 
@@ -34,7 +33,7 @@ Movimentacao.belongsTo(Equipamento, { foreignKey: 'equipamentoId' });
 Local.hasMany(Movimentacao, { foreignKey: 'localId' });
 Movimentacao.belongsTo(Local, { foreignKey: 'localId' });
 
-// 4. Sincroniza Banco
+// 4. Sincroniza o banco
 sequelize.sync()
     .then(() => console.log('[BANCO] Sincronizado com sucesso!'))
     .catch((error) => console.error('[ERRO] Falha no banco:', error));
@@ -49,9 +48,9 @@ const localService = new LocalService(localRepository);
 const equipamentoRepository = new EquipamentoRepository(Equipamento);
 const equipamentoService = new EquipamentoService(equipamentoRepository);
 
-// [NOVO] Movimentações
+// Movimentações
 const movimentacaoRepository = new MovimentacaoRepository(Movimentacao);
-// Aqui passo o repositório de movimentação E O DE EQUIPAMENTO, pois o service precisa validar status
+// Aqui passa o repositório de movimentação E O DE EQUIPAMENTO, pois o service precisa validar status
 const movimentacaoService = new MovimentacaoService(movimentacaoRepository, equipamentoRepository);
 
 // Exporta tudo
